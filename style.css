@@ -91,6 +91,7 @@ footer {
   font-size: 14px;
 }
 
+html { overflow-y: scroll; scrollbar-gutter: stable; }
 .meta { color: var(--muted); font-family: sans-serif; font-size: 14px; margin-top: 0; }
 .lesson h2 { margin-top: 28px; }
 .lesson li { margin-bottom: 6px; }
