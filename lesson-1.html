@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 1: What is neuromorphic computing, and why? | Spiyk</title>
+<meta name="description" content="A plain-language introduction to neuromorphic computing: what it is, why people care and where it falls short.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">SPIYK</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="learning-path.html" class="here">Learning path</a>
+    <a href="lif-neuron-playground/">Playground</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="https://github.com/spiyk">GitHub</a>
+  </nav>
+</header>
+<main class="lesson">
+<h1>1. What is neuromorphic computing, and why?</h1>
+<p class="meta">Lesson 1 of 8 · about 10 minutes · no prerequisites · last checked November 2026</p>
+
+<h2>The short version</h2>
+<p>Neuromorphic computing builds hardware and software that work more like a brain than like a conventional computer. Its basic unit is the spiking neuron. A spiking neuron stays quiet until its input is strong enough, then sends a short pulse, called a spike, to the neurons it is connected to. Between spikes, very little needs to happen.</p>
+
+<h2>How it differs from a conventional computer</h2>
+<ul>
+<li><b>Memory and processing.</b> In a typical computer the processor and the memory are separate parts, and data travels between them constantly. That travel costs time and energy. In many neuromorphic designs each neuron keeps its own state and connection strengths close by.</li>
+<li><b>Clock versus events.</b> A conventional chip updates on every tick of a clock. A neuromorphic chip is usually event-driven: work happens when a spike arrives.</li>
+<li><b>Dense versus sparse.</b> Ordinary deep learning multiplies large arrays of numbers. A spiking network passes short, sparse events, and most neurons are silent at any given moment.</li>
+</ul>
+
+<h2>Why people care</h2>
+<p>The human brain is often quoted as using roughly 20 watts, far less than a data-centre GPU cluster, while doing tasks that computers find hard. Neuromorphic designs try to capture some of that efficiency. The most realistic gains are for always-on, low-power jobs close to a sensor, such as event cameras, wearables and small robots. This is usually called edge AI. Reported energy savings depend heavily on the task and the hardware, so be careful with any single headline number.</p>
+
+<h2>Where it exists today</h2>
+<p>There are research chips and systems such as Intel's Loihi and the SpiNNaker machines, and small commercial chips from companies such as BrainChip, SynSense and Innatera. Availability and access terms change, so check each project's own website. Lesson 8 will look at this in more detail.</p>
+
+<h2>Honest limits</h2>
+<ul>
+<li>It is not a replacement for GPUs. Training spiking networks is harder than training ordinary networks, and the software ecosystem is smaller.</li>
+<li>The benefit depends on the job being sparse and event-driven. A workload that is not will see little gain.</li>
+<li>A lot of the field is still research, and many chips are small.</li>
+</ul>
+
+<h2>What comes next</h2>
+<p>Lesson 2 builds the basic unit, the spiking neuron, and lets you play with one in your browser.</p>
+<div class="pager"><a href="learning-path.html">&larr; Learning path</a><a href="lesson-2.html">Lesson 2: The spiking neuron &rarr;</a></div>
+</main>
+<footer>
+  Spiyk is an early, open-source project. Code is MIT licensed; lesson text is CC BY 4.0.
+  Developed with the help of AI tools.
+</footer>
+</body>
+</html>

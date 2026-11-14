@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 3: Encoding information as spikes | Spiyk</title>
+<meta name="description" content="Rate coding, temporal coding and event-based data: how numbers become spike patterns.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">SPIYK</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="learning-path.html" class="here">Learning path</a>
+    <a href="lif-neuron-playground/">Playground</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="https://github.com/spiyk">GitHub</a>
+  </nav>
+</header>
+<main class="lesson">
+<h1>3. Encoding information as spikes</h1>
+<p class="meta">Lesson 3 of 8 · about 15 minutes · read Lesson 2 first · last checked November 2026</p>
+
+<h2>The problem</h2>
+<p>A spike is just an event. It carries no number inside it. So a value such as the brightness of a pixel or the loudness of a sound has to be turned into a pattern of spikes. This is called encoding. The way you encode changes how many spikes you need, how quickly you get an answer and how sensitive the result is to noise.</p>
+
+<h2>Rate coding: the value is how many spikes</h2>
+<p>A brighter pixel produces more spikes in a time window. There are two common ways to produce them:</p>
+<ul>
+<li>Feed the value to a LIF neuron as a constant input. A stronger input makes the neuron fire more often (see the table below).</li>
+<li>Use randomness: at every step, emit a spike with a probability equal to the value. This is common in tutorials.</li>
+</ul>
+<p><b>Strengths:</b> simple, and not bothered by small timing errors. <b>Weaknesses:</b> reading the value accurately takes many time steps, and it uses many spikes. In event-driven hardware the cost generally grows with the number of spikes.</p>
+<p>The random version is noisy. For a value p over T steps, the spike count is about p × T, with a typical spread of the square root of T × p × (1 - p). For p = 0.3 and T = 100 that is about 30 spikes give or take 5, which is roughly a 15% error in the estimated value. At T = 1,000 the error falls to about 5%.</p>
+
+<h2>Temporal coding: the value is when the first spike comes</h2>
+<p>A stronger input makes the neuron fire sooner. A LIF neuron already does this. With <code>beta = 0.9</code> and <code>threshold = 1.0</code>, starting from zero:</p>
+<div class="tablewrap"><table>
+<tr><th>Input per step</th><th>First spike at step</th><th>Spikes per 100 steps (rate)</th></tr>
+<tr><td>0.12</td><td>18</td><td>5</td></tr>
+<tr><td>0.15</td><td>11</td><td>9</td></tr>
+<tr><td>0.2</td><td>7</td><td>14</td></tr>
+<tr><td>0.3</td><td>4</td><td>25</td></tr>
+<tr><td>0.5</td><td>3</td><td>33</td></tr>
+</table></div>
+<p>The same neuron shows both codes. The middle column is a latency code: one spike, and its timing carries the value. The last column is a rate code: the value shows up as how often it fires. Because the neuron resets to zero after each spike, the gap between spikes equals the first-spike step.</p>
+<p><b>Strengths:</b> a single spike can carry a value, so it is fast and uses few spikes. <b>Weaknesses:</b> it depends on precise timing, so noise or jitter changes the value, and it needs a known starting time such as the moment a stimulus appears.</p>
+
+<h2>Event-based data</h2>
+<p>An event camera does not capture frames. Each pixel reports only when its brightness changes. An event carries the pixel position (x, y), a timestamp and a polarity (brighter or darker). A still scene produces almost no events and fast motion produces many, so the data is already sparse and spike-like. It can be fed to a spiking network without converting frames into spikes first.</p>
+<p>Public datasets exist, such as N-MNIST (digits recorded with an event camera) and DVS Gesture (hand gestures). The Tonic library can load them. Check each project's own site for current details.</p>
+
+<h2>Which one to use?</h2>
+<ul>
+<li><b>Rate coding:</b> robust and easy, but slow and spike-hungry.</li>
+<li><b>Temporal coding:</b> fast and sparse, but sensitive to timing noise.</li>
+<li><b>Event data:</b> no conversion step, but you need an event sensor or an event dataset.</li>
+</ul>
+<p>Real systems often mix these ideas.</p>
+
+<h2>Try it</h2>
+<p>Open the <a href="lif-neuron-playground/">LIF neuron playground</a> and keep Leak at 0.9 and Threshold at 1.0. Set the input to 0.12 and count the steps between spikes with the step counter: it should be 18. Raise the input to 0.5: the gap should shrink to 3.</p>
+
+<h2>Exercise</h2>
+<p>With <code>beta = 0.9</code> and <code>threshold = 1.0</code>, what is the smallest input (in the playground's 0.005 slider steps) that makes the neuron fire by step 5? Predict, then test.</p>
+<details><summary>Show the answer</summary>
+<p>After n steps from zero, the potential is <code>input × (1 - 0.9^n) / 0.1</code>. At n = 5 the factor is about 4.095, so the input must be at least 1 / 4.095, which is about 0.244. On the slider, the smallest value that works is 0.245. At 0.24 the neuron fires on step 6 instead.</p>
+</details>
+
+<h2>Limits</h2>
+<p>These are the engineering codes used in spiking networks. How real brains encode information is still an active research question, and this lesson does not claim to describe it.</p>
+<div class="pager"><a href="lesson-2.html">&larr; Lesson 2</a><a href="lesson-4.html">Lesson 4: A small network &rarr;</a></div>
+</main>
+<footer>
+  Spiyk is an early, open-source project. Code is MIT licensed; lesson text is CC BY 4.0.
+  Developed with the help of AI tools.
+</footer>
+</body>
+</html>

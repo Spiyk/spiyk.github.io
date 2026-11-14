@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 4: A small network and the raster plot | Spiyk</title>
+<meta name="description" content="How a small spiking network is wired, and how to read a raster plot.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">SPIYK</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="learning-path.html" class="here">Learning path</a>
+    <a href="lif-neuron-playground/">Playground</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="https://github.com/spiyk">GitHub</a>
+  </nav>
+</header>
+<main class="lesson">
+<h1>4. A small network and the raster plot</h1>
+<p class="meta">Lesson 4 of 8 · about 15 minutes · read Lesson 2 first · last checked November 2026</p>
+
+<h2>From one neuron to a network</h2>
+<p>When a neuron spikes, the spike travels along its connections to other neurons. Each connection has a weight. A positive weight pushes the target toward firing (excitatory). A negative weight pulls it away (inhibitory).</p>
+<p>The <a href="snn-network-playground/">network playground</a> uses 50 neurons: 40 excitatory and 10 inhibitory. Each possible connection exists with a 10% chance, chosen at random but fixed by the seed. That gives each neuron about five incoming connections. There is no learning in this model.</p>
+
+<h2>Two rules worth noticing</h2>
+<ul>
+<li><b>Spikes arrive one step later.</b> A spike at step t affects its targets at step t + 1.</li>
+<li><b>Only spikes do work.</b> A neuron adds a connection weight only if the sender spiked in the previous step. If nothing spikes, nothing is added. This event-driven behaviour is the main reason neuromorphic hardware can be efficient.</li>
+</ul>
+
+<h2>Reading a raster plot</h2>
+<p>A raster plot shows time on the horizontal axis and neuron number on the vertical axis. Every dot is one spike.</p>
+<ul>
+<li>A row with many dots is a busy neuron. An empty row is a silent one.</li>
+<li>A tall vertical stripe means many neurons fired together.</li>
+<li>The purple bars at the bottom count spikes per step.</li>
+<li>In the playground, green dots are excitatory neurons and orange dots are inhibitory ones.</li>
+</ul>
+
+<h2>Why inhibition matters</h2>
+<p>With the default settings, about 4.2% of neurons fire per step in a 1,000-step run (seed 42). Raise the excitatory weight to 0.8 and the activity runs away: about 77.4% of neurons fire per step. Inhibitory neurons help keep activity balanced. Try raising the inhibitory weight and watch the activity fall.</p>
+
+<h2>Exercise</h2>
+<p>Keep the defaults and change only the random seed. The wiring and the input change, but the overall firing rate should stay in a similar range. Does it? What does that tell you about the network?</p>
+
+<h2>Limits</h2>
+<p>This is a small random network for learning. It does not learn anything and it is not a model of a specific brain region or chip.</p>
+<div class="pager"><a href="lesson-3.html">&larr; Lesson 3</a><a href="lesson-6.html">Lesson 6: Fixed-point &rarr;</a></div>
+</main>
+<footer>
+  Spiyk is an early, open-source project. Code is MIT licensed; lesson text is CC BY 4.0.
+  Developed with the help of AI tools.
+</footer>
+</body>
+</html>

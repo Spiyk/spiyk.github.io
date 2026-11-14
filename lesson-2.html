@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson 2: The spiking neuron (LIF) | Spiyk</title>
+<meta name="description" content="How a leaky integrate-and-fire neuron works, with a worked example you can check in the browser.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">SPIYK</a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="learning-path.html" class="here">Learning path</a>
+    <a href="lif-neuron-playground/">Playground</a>
+    <a href="roadmap.html">Roadmap</a>
+    <a href="https://github.com/spiyk">GitHub</a>
+  </nav>
+</header>
+<main class="lesson">
+<h1>2. The spiking neuron (LIF)</h1>
+<p class="meta">Lesson 2 of 8 · about 15 minutes · needs only basic arithmetic · last checked November 2026</p>
+
+<h2>The idea</h2>
+<p>A leaky integrate-and-fire (LIF) neuron keeps one number, its membrane potential <code>v</code>. On every time step it does three things:</p>
+<ul>
+<li><b>Integrate:</b> add the new input to <code>v</code>.</li>
+<li><b>Leak:</b> keep only a fraction of the old value, so unused charge fades.</li>
+<li><b>Fire:</b> if <code>v</code> reaches the threshold, emit a spike and reset <code>v</code> to zero.</li>
+</ul>
+<pre><code>v = beta * v + input;
+if (v &gt;= threshold) {
+  spike = true;
+  v = 0;
+}</code></pre>
+<p><code>beta</code> is the leak: 1.0 means no leak, smaller values forget faster. This is a simplified, discrete-time form of the model used in libraries such as snnTorch, Brian2 and Nengo.</p>
+
+<h2>A worked example</h2>
+<p>Use the playground defaults: <code>beta = 0.9</code>, <code>threshold = 1.0</code>, <code>input = 0.12</code> per step.</p>
+<p>The potential climbs toward a steady level of <code>input / (1 - beta)</code>, which is 0.12 / 0.1 = 1.2. That is above the threshold, so the neuron fires. Starting from zero, stepping through the formula gives the first spike on step 18. After the reset the neuron starts again from zero, so it spikes every 18 steps.</p>
+<p>Now lower the input to 0.08. The steady level is 0.08 / 0.1 = 0.8, which is below the threshold. The neuron never fires: the leak cancels the input.</p>
+<p class="note">Rule of thumb: a LIF neuron can only fire if <code>input / (1 - beta)</code> is above the threshold. That is why spiking neurons respond to strong or sustained input and stay silent otherwise, and why silence means no work for the hardware.</p>
+
+<h2>Try it</h2>
+<p>Open the <a href="lif-neuron-playground/">LIF neuron playground</a> and check the example: the defaults give a steady rhythm of spikes, and an input of 0.08 gives none.</p>
+
+<h2>Exercise</h2>
+<p>Set <code>beta = 0.8</code> and <code>threshold = 1.0</code>. What is the smallest input that lets the neuron fire? Predict it first, then test it in the playground.</p>
+<details><summary>Show the answer</summary>
+<p>The steady level is <code>input / (1 - 0.8) = input / 0.2</code>. It must be above 1.0, so the input must be above 0.2. Try 0.19 (silent) and 0.25 (fires).</p>
+</details>
+
+<h2>Limits of this model</h2>
+<p>Real neurons are far more complex. LIF is popular because it is simple and cheap to compute, not because it is complete.</p>
+<div class="pager"><a href="lesson-1.html">&larr; Lesson 1</a><a href="lesson-3.html">Lesson 3: Encoding &rarr;</a></div>
+</main>
+<footer>
+  Spiyk is an early, open-source project. Code is MIT licensed; lesson text is CC BY 4.0.
+  Developed with the help of AI tools.
+</footer>
+</body>
+</html>

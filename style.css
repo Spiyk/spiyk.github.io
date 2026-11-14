@@ -90,3 +90,23 @@ footer {
   font-family: sans-serif;
   font-size: 14px;
 }
+
+.meta { color: var(--muted); font-family: sans-serif; font-size: 14px; margin-top: 0; }
+.lesson h2 { margin-top: 28px; }
+.lesson li { margin-bottom: 6px; }
+code { background: var(--card); padding: 1px 5px; border-radius: 4px; }
+pre {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  overflow-x: auto;
+}
+pre code { padding: 0; background: none; }
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-family: sans-serif; font-size: 14px; }
+th, td { border: 1px solid var(--border); padding: 6px 8px; text-align: left; }
+details { margin: 12px 0; }
+summary { cursor: pointer; color: var(--accent); font-family: sans-serif; }
+.pager { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 36px; font-family: sans-serif; }
+.note { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--muted); }
