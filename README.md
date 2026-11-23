@@ -24,4 +24,3 @@ Corrections, clearer explanations, translations and ideas are welcome. Please op
 
 Code is released under the MIT Licence. Lesson text is intended for CC BY 4.0.
 
-Developed with the help of AI tools.
